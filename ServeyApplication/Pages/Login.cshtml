@@ -26,6 +26,11 @@
             <a asp-page="/CreateAccount">Create a new account</a>
         </div>
 
+        @if (Model.Message != null)
+        {
+            <p class="text-danger mt-3">@Html.Raw(Model.Message)</p>
+        }
+
     </form>
 </div>
 

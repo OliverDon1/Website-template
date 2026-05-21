@@ -10,6 +10,16 @@ builder.Services.AddRazorPages();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddSingleton<EmailService>();
+
+builder.Services.AddAuthentication("MyCookieAuth")
+    .AddCookie("MyCookieAuth", options =>
+    {
+        options.LoginPath = "/Login";
+        options.AccessDeniedPath = "/AccessDenied";
+    });
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -26,14 +36,8 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
-
-// Redirect root to Login
-app.MapGet("/", context =>
-{
-    context.Response.Redirect("/Login");
-    return Task.CompletedTask;
-});
 
 app.MapRazorPages();
 

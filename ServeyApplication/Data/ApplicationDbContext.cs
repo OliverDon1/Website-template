@@ -11,5 +11,7 @@ namespace ServeyApplication.Data
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<EmailConfirmationToken> EmailConfirmationTokens { get; set; }
+
     }
 }
