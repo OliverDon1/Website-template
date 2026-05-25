@@ -19,6 +19,7 @@ builder.Services.AddAuthentication("MyCookieAuth")
         options.AccessDeniedPath = "/AccessDenied";
     });
 
+builder.Services.AddHostedService<PasswordResetCleanupService>();
 
 var app = builder.Build();
 
