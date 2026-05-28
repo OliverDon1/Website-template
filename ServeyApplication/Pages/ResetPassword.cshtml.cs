@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.RateLimiting;
 using ServeyApplication.Data;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Cryptography;
@@ -7,6 +8,8 @@ using System.Text;
 
 namespace ServeyApplication.Pages.Account
 {
+    [EnableRateLimiting("ResetPolicy")]
+
     public class ResetPasswordModel : PageModel
     {
         private readonly ApplicationDbContext _context;

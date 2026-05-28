@@ -1,13 +1,15 @@
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ServeyApplication.Data;
 using ServeyApplication.Models;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace ServeyApplication.Pages
 {
+    [EnableRateLimiting("LoginPolicy")]
     public class LoginModel : PageModel
     {
         private readonly ApplicationDbContext _context;
@@ -19,6 +21,10 @@ namespace ServeyApplication.Pages
 
         [BindProperty]
         public InputModel Input { get; set; }
+
+        // ⭐ Add RememberMe binding
+        [BindProperty]
+        public bool RememberMe { get; set; }
 
         public string Message { get; set; }
 
@@ -73,8 +79,14 @@ namespace ServeyApplication.Pages
             var identity = new ClaimsIdentity(claims, "MyCookieAuth");
             var principal = new ClaimsPrincipal(identity);
 
-            // 5. Sign in
-            await HttpContext.SignInAsync("MyCookieAuth", principal);
+            // ⭐ 5. Sign in with Remember Me support
+            var authProperties = new AuthenticationProperties
+            {
+                IsPersistent = RememberMe,
+                ExpiresUtc = RememberMe ? DateTime.UtcNow.AddDays(14) : null
+            };
+
+            await HttpContext.SignInAsync("MyCookieAuth", principal, authProperties);
 
             return RedirectToPage("/Index");
         }

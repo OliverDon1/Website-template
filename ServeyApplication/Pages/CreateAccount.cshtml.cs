@@ -66,6 +66,15 @@ namespace ServeyApplication.Pages
                 TokenString = token
             };
 
+            var profile = new UserProfile
+            {
+                UserId = user.Id,
+                DisplayName = user.Email.Split('@')[0] // default
+            };
+
+            _context.UserProfiles.Add(profile);
+            _context.SaveChanges();
+
             _context.EmailConfirmationTokens.Add(emailToken);
             _context.SaveChanges();
 

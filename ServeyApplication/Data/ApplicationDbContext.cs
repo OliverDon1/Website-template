@@ -13,6 +13,6 @@ namespace ServeyApplication.Data
         public DbSet<User> Users { get; set; }
         public DbSet<EmailConfirmationToken> EmailConfirmationTokens { get; set; }
         public DbSet<PasswordResetToken> PasswordResetTokens { get; set; }
-
+        public DbSet<UserProfile> UserProfiles { get; set; }
     }
 }

@@ -22,6 +22,11 @@
 
         <button type="submit" class="btn btn-primary w-100">Login</button>
 
+        <div class="form-group">
+            <input type="checkbox" asp-for="RememberMe" />
+            <label asp-for="RememberMe">Remember Me</label>
+        </div>
+
         <div class="text-center mt-3">
             <a asp-page="/CreateAccount">Create a new account</a>
         </div>
